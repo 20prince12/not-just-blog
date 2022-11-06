@@ -1,10 +1,10 @@
 {
-  "name": "server",
+  "name": "not-just-blog",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,9 +17,13 @@
     "url": "https://github.com/20prince12/not-just-blog/issues"
   },
   "homepage": "https://github.com/20prince12/not-just-blog#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "hbs": "^4.2.0"
   }
 }
