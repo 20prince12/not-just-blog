@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+    {{>header}}
+    <form method="POST" action="/create_user">
+        <label> Firstname </label>
+        <input type="text" name="first_name" min="3"/>
+        <label> Lastname: </label>
+        <input type="text" name="last_name" min="3"/>
+        <label> Username: </label>
+        <input type="text" name="username" min="3"/>
+        <label> Email: </label>
+        <input type="email" name="email" min="3"/>
+        <label>Password: </label>
+        <input type="password" name="password" min="3"/>
+        <input type="Submit"/>
+    </form>
+    {{>footer}}
+</html>
