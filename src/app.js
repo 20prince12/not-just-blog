@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/",  (req, res) => {
-    res.render('index',{username : req.session.username});
+    res.render('index',{session : req.session});
 });
 
 app.get("/register",(req,res)=>{
@@ -45,9 +45,15 @@ app.post("/create_user",(req,res)=>{
     })
 });
 
+app.get("/logout",(req,res)=>{
+    req.session.destroy();
+    res.redirect('/');
+})
+
 app.get("/login",(req,res)=>{
     res.render('login');
 });
+
 
 app.post("/auth_user",(req,res)=>{
 
@@ -68,7 +74,7 @@ app.post("/auth_user",(req,res)=>{
 
 
 app.get('*', (req, res) => {
-    res.render('404');
+    res.render('404',{session : req.session});
 })
 
 app.listen(port, () => console.log(`App successfully started on port ${port}`));

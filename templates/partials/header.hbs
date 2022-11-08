@@ -1,9 +1,13 @@
 <header>
     <li>
-        <ul>HOME</ul>
-        <ul>FORUM</ul>
-        <ul>LOGIN</ul>
-        <ul>REGISTER</ul>
-        <ul>PROFILE</ul>
+        <ul><a href="/"> HOME</a></ul>
+        <ul><a href="/forum">FORUM</a></ul>
+        {{#if session.loggedin}}
+            <ul><a href="/profile">PROFILE</a></ul>
+            <ul><a href="/logout">LOGOUT</a></ul>
+        {{else}}
+            <ul><a href="/login">LOGIN</a></ul>
+            <ul><a href="/register">REGISTER</a></ul>
+        {{/if}}
     </li>
 </header>
