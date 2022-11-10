@@ -1,80 +1,49 @@
-const path = require('path');
+//Initialize express
 const express = require('express');
-const cors = require('cors');
-const hbs = require('hbs');
-const db = require('./utils/dbconnection');
-const userModel = require("./models/user");
-const session = require('express-session');
-
 const app = express();
-const port = process.env.PORT || 5000;
 
-// Define paths for Express config
-const publicDirectoryPath = path.join(__dirname, '../public')
-const viewsPath = path.join(__dirname, '../templates/views')
-const partialsPath = path.join(__dirname, '../templates/partials')
-
-
-// Setup handlebars engine and views location
-app.set('view engine', 'hbs')
-app.set('views', viewsPath)
-hbs.registerPartials(partialsPath)
-
-// Setup static directory to serve
-app.use(express.static(publicDirectoryPath))
-app.use(session({secret: 'secret', resave: true, saveUninitialized: true}));
+//Enable CORS , JSON , Form Data
+const cors = require('cors');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-app.get("/",  (req, res) => {
-    res.render('index',{session : req.session});
-});
-
-app.get("/register",(req,res)=>{
-    res.render('register');
-});
-
-app.post("/create_user",(req,res)=>{
-    const user = new userModel(req.body);
-
-    user.save().then((result) => {
-        res.redirect('/');
-    }, (error) => {
-        res.status(501).send(error)
-    })
-});
-
-app.get("/logout",(req,res)=>{
-    req.session.destroy();
-    res.redirect('/');
-})
-
-app.get("/login",(req,res)=>{
-    res.render('login');
-});
+//Setup Session
+const session = require('express-session');
+app.use(session({secret: 'secret', resave: true, saveUninitialized: true}));
 
 
-app.post("/auth_user",(req,res)=>{
+//utility modules
+const path = require('path');
 
-    const username = req.body.username;
-    const password = req.body.password;
 
-    userModel.findOne({username : username , password : password }).then((result) => {
-        if(!result) res.status(201).send("Invalid Passsword/Username");
-        else{
-            req.session.loggedin = true;
-            req.session.username = username;
-            res.redirect('/');
-        }
-    }, (error) => {
-        res.status(501).send(error)
-    })
-});
+//Setup Static Directory
+const publicDirectoryPath = path.join(__dirname, '../public')
+app.use(express.static(publicDirectoryPath))
+
+//Setup HBS Directory
+const hbs = require('hbs');
+const viewsPath = path.join(__dirname, '../templates/views')
+app.set('views', viewsPath)
+const partialsPath = path.join(__dirname, '../templates/partials')
+hbs.registerPartials(partialsPath)
+app.set('view engine', 'hbs')
+
+//Connect db
+require('./utils/dbconnection');
+
+//Setup Routes
+const userRouter = require('./routers/users');
+const blogRouter = require('./routers/blogs');
+
+app.use(userRouter);
+app.use(blogRouter);
 
 
 app.get('*', (req, res) => {
     res.render('404',{session : req.session});
 })
 
-app.listen(port, () => console.log(`App successfully started on port ${port}`));
+
+port = process.env.PORT || 5000
+app.listen(port , () => console.log(`App successfully started on port ${port}`));
