@@ -4,35 +4,46 @@ const router = new express.Router();
 
 
 
-router.post("/register",(req,res)=>{
+router.post("/register",async (req,res)=>{
     const user = new userModel(req.body);
-
-    user.save().then((result) => {
-        res.redirect('/');
-    }, (error) => {
-        res.status(500).send("Internal Server Error")
-    })
+    try {
+        db_res = await user.save();
+        console.log(db_res);
+        res.redirect('/login');
+    }
+    catch(error) {
+        res.status(500).send(error);
+    }
 });
 
 router.get("/register",(req,res)=>{
     res.render('register');
 });
 
-router.post("/login",(req,res)=>{
+router.post("/login",async (req,res)=>{
 
     const username = req.body.username;
     const password = req.body.password;
 
-    userModel.findOne({username : username , password : password }).then((result) => {
-        if(!result) res.status(201).send("Invalid Passsword/Username");
-        else{
+    try
+    {
+        db_res = await userModel.findOne({username : username , password : password });
+
+        if(!db_res)
+        {
+            res.status(201).send("Invalid Passsword/Username");
+        }
+        else
+        {
             req.session.loggedin = true;
             req.session.username = username;
             res.redirect('/');
         }
-    }, (error) => {
-        res.status(500).send("Internal Server Error")
-    })
+    }
+    catch(error)
+    {
+        res.status(500).send(error)
+    }
 });
 
 router.get("/login",(req,res)=>{
