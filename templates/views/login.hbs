@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <title>Login</title>
     <link rel="icon" href="img/logo.png">
     <link rel="stylesheet" href="css/style.css">
 </head>
+<body>
 {{>header}}
+<main>
+
 <form method="POST" action="/login">
+    {{#if msg}}
+        <p>{{msg}}</p>
+    {{/if}}
     <label> Username: </label>
-    <input type="text" name="username" min="3"/>
+    <input type="text" name="username" required min="3"/>
     <label>Password: </label>
-    <input type="password" name="password" min="3"/>
+    <input type="password" name="password" required min="3"/>
     <input type="Submit"/>
 </form>
+</main>
 {{>footer}}
+</body>
 </html>

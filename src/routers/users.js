@@ -1,14 +1,14 @@
 const express = require('express');
 const userModel = require("../models/user");
 const router = new express.Router();
-
+const bcrypt = require('bcryptjs');
 
 
 router.post("/register",async (req,res)=>{
+
     const user = new userModel(req.body);
     try {
         db_res = await user.save();
-        console.log(db_res);
         res.redirect('/login');
     }
     catch(error) {
@@ -27,14 +27,16 @@ router.post("/login",async (req,res)=>{
 
     try
     {
-        db_res = await userModel.findOne({username : username , password : password });
+        user = await userModel.findByCredentials(username , password);
 
-        if(!db_res)
-        {
-            res.status(201).send("Invalid Passsword/Username");
+
+        if (!user) {
+            res.status(201);
+            res.render('login',{'msg' : 'Invalid Username/Password'})
         }
         else
         {
+            const token = await user.generateAuthToken();
             req.session.loggedin = true;
             req.session.username = username;
             res.redirect('/');

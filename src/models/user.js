@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const validateEmail = function(email) {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -22,6 +24,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: 3,
+        unique: true,
         trim:true,
     },
     email: {
@@ -29,6 +32,8 @@ const UserSchema = new mongoose.Schema({
         required: true,
         minLength: 3,
         trim:true,
+        unique: true,
+        lowercase: true,
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
         validate: [validateEmail,'Please fill a valid email address2']
     },
@@ -42,6 +47,46 @@ const UserSchema = new mongoose.Schema({
     versionKey: false
 });
 
+UserSchema.pre('save' ,async function(next) {
+    if (!this.password) return next();
+    try {
+        this.password = await bcrypt.hash(this.password , 8);
+        next();
+    }
+    catch (error) {
+        return next(error);
+
+    }
+});
+
+UserSchema.pre('updateOne' ,async function(next) {
+
+    if (!this.getUpdate().password) return next();
+    try {
+        this.getUpdate().password = await bcrypt.hash(this.getUpdate().password , 8);
+        next();
+    }
+    catch (error) {
+        return next(error);
+    }
+});
+
+UserSchema.methods.generateAuthToken = async function() {
+
+    const token = jwt.sign({_id: this._id.toString() } , 'secret');
+    console.log(token);
+    return token;
+}
+
+UserSchema.statics.findByCredentials = async (username, password) => {
+    const user = await User.findOne({username : username} );
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+        return;
+    }
+
+    return user;
+}
 const User = mongoose.model("user", UserSchema);
 
 module.exports = User;

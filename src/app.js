@@ -35,10 +35,11 @@ require('./utils/dbconnection');
 //Setup Routes
 const userRouter = require('./routers/users');
 const blogRouter = require('./routers/blogs');
+const profileRouter = require('./routers/profile');
 
 app.use(userRouter);
 app.use(blogRouter);
-
+app.use(profileRouter);
 
 app.get('*', (req, res) => {
     res.render('404',{session : req.session});
