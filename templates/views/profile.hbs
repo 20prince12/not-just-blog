@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js"></script>
+</head>
+<body>
+{{>header}}
+<main>
+{{#if session.loggedin}}
+<form method="POST" action="/profile">
+    {{#if msg}}
+        <p>{{msg}}</p>
+    {{/if}}
+    <label> Firstname </label>
+    <input type="text" id="first_name_input" name="first_name" required min="3" value={{user.first_name}} disabled/>
+    <button onclick=toggle_input(event,"first_name_input")>edit</button>
+    <br>
+    <label> Lastname: </label>
+    <input type="text" id="last_name_input" name="last_name" required min="3" value={{user.last_name}} disabled/>
+    <button onclick=toggle_input(event,"last_name_input")>edit</button>
+    <br>
+    <label> Username: </label>
+    <input type="text" id="username_input" name="username" required min="3" value={{user.username}} disabled/>
+    <button onclick=toggle_input(event,"username_input")>edit</button>
+    <br>
+    <label> Email: </label>
+    <input type="email" id="email_input" name="email" required min="3" value={{user.email}} disabled/>
+    <button onclick=toggle_input(event,"email_input")>edit</button>
+    <br>
+    <label>Password: </label>
+    <input type="password" id="password_input" name="password" min="3" disabled placeholder = "change me if you want"/>
+    <button onclick=toggle_input(event,"password_input") >edit</button>
+    <br>
+    <input type="Submit" value="Apply Changes"/>
+</form>
+{{else}}
+ <p>Please login to abuse this page</p>
+{{/if}}
+
+</main>
+{{>footer}}
+</body>
+</html>
