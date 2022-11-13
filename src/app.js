@@ -39,6 +39,7 @@ require('./utils/dbconnection');
 const auth = require('./middlewares/auth');
 
 
+
 //Setup Routes
 const userRouter = require('./routers/users');
 const blogRouter = require('./routers/blogs');
@@ -49,9 +50,11 @@ app.use(userRouter);
 app.use(blogRouter);
 app.use(messageRouter);
 
+
 app.get('*', (req, res) => {
     res.render('404',{session : req.session});
 })
+
 
 
 port = process.env.PORT || 5000

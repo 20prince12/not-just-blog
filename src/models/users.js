@@ -43,8 +43,9 @@ const UserSchema = new mongoose.Schema({
         minLength:3,
         trim:true
     }
-},{collection:'user',
-    versionKey: false
+},{
+    versionKey: false,
+    timestamps: true,
 });
 
 UserSchema.pre('save' ,async function(next) {
@@ -76,15 +77,19 @@ UserSchema.methods.generateAuthToken = async function() {
     return token;
 }
 
+UserSchema.statics.getUserPublicData = async function(uid) {
+    const user = await Users.findOne({_id : uid} , {password : 0 , createdAt : 0 ,updatedAt : 0} );
+    return user;
+}
+
 UserSchema.statics.findByCredentials = async (username, password) => {
-    const user = await User.findOne({username : username} );
+    const user = await Users.findOne({username : username} );
+    if (!user) return;
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-        return;
-    }
+    if (!isMatch) return;
 
     return user;
 }
-const User = mongoose.model("user", UserSchema);
+const Users = mongoose.model("user", UserSchema);
 
-module.exports = User;
+module.exports = Users;

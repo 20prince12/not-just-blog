@@ -10,11 +10,36 @@
 
 <body>
 {{>header}}
+<main>
+    {{#if msg}}
+        <p>{{msg}}</p>
+    {{/if}}
 {{#if session.loggedin}}
     <h1>welcome {{session.username}}</h1>
-{{else}}
-    <h1>Login to create your own posts</h1>
- {{/if}}
+    <form method="POST" action="/create_post">
+        <label> Subject : </label>
+        <input type="text" name="post_subject" required min="3"/>
+        <br>
+        <label> Body: </label>
+        <textarea type="text" name="post_body" required min="3" rows="4" cols="50"/>
+        </textarea>
+        <input type="Submit" value="create" />
+    </form>
+    {{else}}
+        <h1>Login to create your own posts</h1>
+    {{/if}}
+
+    <hr>
+    <div class="posts">
+        {{#each posts}}
+            <p>subject : {{this.subject}}</p>
+            <p>body : {{this.body}}</p>
+            <p>created by : {{this.first_name}} {{this.last_name}}</p>
+            <p>created at : {{this.createdAt}}</p>
+            <hr>
+        {{/each}}
+    </div>
+</main>
 {{>footer}}
 </body>
 </html>

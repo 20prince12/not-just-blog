@@ -4,3 +4,4 @@ function toggle_input(event,id) {
     if(btn.disabled == false) btn.disabled = true
     else btn.disabled = false;
 }
+

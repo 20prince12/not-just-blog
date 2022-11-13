@@ -85,6 +85,16 @@ body {
     opacity: 0.8;
 }
 
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(92, 92, 92);
+    color: white;
+    text-align: center;
+}
+
 @media only screen and (max-width: 767px) {
     .notfound .notfound-404 {
         height: 115px;
@@ -97,3 +107,29 @@ body {
         height: 86px;
     }
 }
+
+nav > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+nav > ul > li {
+    float: left;
+}
+
+nav > ul > li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav > ul > li a:hover {
+    background-color: #111;
+}
+
+

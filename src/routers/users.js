@@ -1,13 +1,14 @@
 const express = require('express');
-const userModel = require("../models/user");
+const userModel = require("../models/users");
 const router = new express.Router();
-const bcrypt = require('bcryptjs');
 const auth = require('../middlewares/auth');
+const ObjectId = require('mongodb').ObjectId;
 
 router.post("/register",async (req,res)=>{
 
     const user = new userModel(req.body);
     try {
+        console.log(req.body);
         db_res = await user.save();
         res.redirect('/login');
     }
@@ -27,7 +28,7 @@ router.post("/login",async (req,res)=>{
 
     try
     {
-        user = await userModel.findByCredentials(username , password);
+        const user = await userModel.findByCredentials(username , password);
 
 
         if (!user) {
@@ -38,7 +39,7 @@ router.post("/login",async (req,res)=>{
         {
             const token = await user.generateAuthToken();
             req.session.loggedin = true;
-            req.session.username = username;
+            req.session.uid = user._id.toString();
             res.redirect('/');
         }
     }
@@ -53,17 +54,15 @@ router.get("/login",(req,res)=>{
     res.render('login', {msg : req.flash('msg')});
 });
 
-router.get("/logout", auth,(req,res)=>{
-    req.session.destroy();
+router.get("/logout", auth,async (req,res)=>{
+    await req.session.destroy();
     res.redirect('/');
 })
 
 router.get("/profile",auth, async (req,res)=>{
     try {
-        db_res = await userModel.findOne({username: req.session.username});
-        msg = req.session.msg;
-        delete req.session.msg;
-        res.render('profile', {session: req.session, user: db_res, msg: msg});
+        db_res = await userModel.findOne({_id: ObjectId(req.session.uid)});
+        res.render('profile', {session: req.session, user: db_res, msg: req.flash('msg')});
     }
     catch(error){
         res.status(500).send("Internal Server Error");
@@ -72,9 +71,8 @@ router.get("/profile",auth, async (req,res)=>{
 
 router.post("/profile",auth ,async (req,res)=>{
     try {
-        db_res =  await userModel.updateOne({username: req.session.username}, req.body );
-        if(req.body.username) req.session.username = req.body.username;
-        req.session.msg = "Sucessfully Updated Profile";
+        db_res =  await userModel.updateOne({_id: ObjectId(req.session.uid)}, req.body );
+        req.flash('msg', 'Profile updated Successfully');
         res.redirect('/profile');
     }
     catch(error) {
