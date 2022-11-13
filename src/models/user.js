@@ -72,9 +72,7 @@ UserSchema.pre('updateOne' ,async function(next) {
 });
 
 UserSchema.methods.generateAuthToken = async function() {
-
     const token = jwt.sign({_id: this._id.toString() } , 'secret');
-    console.log(token);
     return token;
 }
 

@@ -8,13 +8,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-//Setup Session
-const session = require('express-session');
-app.use(session({secret: 'secret', resave: true, saveUninitialized: true}));
+//Setup Session Storage
+const store_session = require('./utils/store_session');
+app.use(store_session);
 
 
-//utility modules
+//other required modules
 const path = require('path');
+const flash = require('connect-flash');
+
+app.use(flash());
 
 
 //Setup Static Directory
@@ -32,14 +35,19 @@ app.set('view engine', 'hbs')
 //Connect db
 require('./utils/dbconnection');
 
+//custom middlewares
+const auth = require('./middlewares/auth');
+
+
 //Setup Routes
 const userRouter = require('./routers/users');
 const blogRouter = require('./routers/blogs');
-const profileRouter = require('./routers/profile');
+const messageRouter = require('./routers/messages');
+
 
 app.use(userRouter);
 app.use(blogRouter);
-app.use(profileRouter);
+app.use(messageRouter);
 
 app.get('*', (req, res) => {
     res.render('404',{session : req.session});
