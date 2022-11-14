@@ -2,11 +2,23 @@
 const express = require('express');
 const app = express();
 
-//Enable CORS , JSON , Form Data
-const cors = require('cors');
+// Form Data
 app.use(express.urlencoded({ extended: true }));
+
+// JSON
 app.use(express.json());
+
+// CORS for all requests
+const cors = require('cors');
 app.use(cors());
+
+//  Request Logging
+const morgan = require('morgan');
+app.use(morgan('combined'));
+
+//Enable Additional Security
+const helmet = require('helmet');
+app.use(helmet());
 
 //Setup Session Storage
 const store_session = require('./utils/store_session');
@@ -44,12 +56,18 @@ const auth = require('./middlewares/auth');
 const userRouter = require('./routers/users');
 const blogRouter = require('./routers/blogs');
 const messageRouter = require('./routers/messages');
+const postModel = require("./models/posts");
+const userModel = require("./models/users");
+const {ObjectId} = require("mongodb");
 
 
 app.use(userRouter);
 app.use(blogRouter);
 app.use(messageRouter);
 
+app.get("/",  async (req, res) => {
+        res.render('index', {session: req.session, msg: req.flash('msg')});
+});
 
 app.get('*', (req, res) => {
     res.render('404',{session : req.session});

@@ -30,14 +30,7 @@
     {{/if}}
 
     <hr>
-    <div class="posts">
-        {{#each posts}}
-            <p>subject : {{this.subject}}</p>
-            <p>body : {{this.body}}</p>
-            <p>created by : {{this.first_name}} {{this.last_name}}</p>
-            <p>created at : {{this.createdAt}}</p>
-            <hr>
-        {{/each}}
+    <div class="posts_container">
     </div>
 </main>
 {{>footer}}

@@ -5,18 +5,23 @@ const postModel = require("../models/posts");
 const userModel = require("../models/users");
 const {ObjectId} = require("mongodb");
 
-router.get("/",  async (req, res) => {
+
+
+router.get("/get_post",  async (req, res) => {
+
     try {
         const posts = await postModel.find({});
-        for(let i=0;i<posts.length;i++){
+        for(let i=0;i<posts.length;i++) {
             const user = await userModel.getUserPublicData(ObjectId(posts[i].uid)) || {};
             posts[i].first_name = user.first_name || "DELETED";
-            posts[i].last_name = user.last_name || "USER";
+            posts[i].last_name = user.last_name || "USER"
+
         }
-        res.render('index', {posts: posts, session: req.session, msg: req.flash('msg')});
+
+        res.status(200).send({posts:posts});
     }
     catch(error) {
-        res.status(500).send("Internal Server Error");
+        res.status(500).send({errors : error});
     }
 });
 

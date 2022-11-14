@@ -78,7 +78,7 @@ UserSchema.methods.generateAuthToken = async function() {
 }
 
 UserSchema.statics.getUserPublicData = async function(uid) {
-    const user = await Users.findOne({_id : uid} , {password : 0 , createdAt : 0 ,updatedAt : 0} );
+    const user = await Users.findOne({_id : uid} , {password : 0 , createdAt : 0 ,updatedAt : 0});
     return user;
 }
 
