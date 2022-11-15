@@ -5,21 +5,33 @@ const auth = require('../middlewares/auth');
 const ObjectId = require('mongodb').ObjectId;
 
 router.post("/register",async (req,res)=>{
-
     const user = new userModel(req.body);
     try {
-        console.log(req.body);
         db_res = await user.save();
-        res.redirect('/login');
+        res.status(200).send({'msg':'Registered Successfully'})
     }
     catch(error) {
-        res.status(500).send(error);
+        console.log(error);
+        res.status(501).send({'msg' : 'Internal Server Failure, Please Try to again later.'});
+    }
+});
+
+router.get("/checkUserExists",async (req,res)=>{
+    try {
+        db_res = await userModel.findOne(req.query)
+        if(db_res) res.status(200).send();
+        else res.status(204).send();
+    }
+    catch(error){
+        res.status(501).send({'msg'  :'Internal Server Failure, Please Try to again later.'})
     }
 });
 
 router.get("/register",(req,res)=>{
     res.render('register');
 });
+
+
 
 router.post("/login",async (req,res)=>{
 
