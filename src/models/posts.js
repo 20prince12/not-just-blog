@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
     uid: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         minLength: 3,
         trim:true,

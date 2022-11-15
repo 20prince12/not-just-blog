@@ -16,15 +16,13 @@
     {{/if}}
 {{#if session.loggedin}}
     <h1>welcome {{session.username}}</h1>
-    <form method="POST" action="/create_post">
         <label> Subject : </label>
-        <input type="text" name="post_subject" required min="3"/>
+        <input type="text" id="post_subject" required min="3"/>
         <br>
         <label> Body: </label>
-        <textarea type="text" name="post_body" required min="3" rows="4" cols="50"/>
+        <textarea type="text" id="post_body" required min="3" rows="4" cols="50"/>
         </textarea>
-        <input type="Submit" value="create" />
-    </form>
+        <button id="submit_post">CREATE</button>
     {{else}}
         <h1>Login to create your own posts</h1>
     {{/if}}

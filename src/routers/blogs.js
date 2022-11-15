@@ -10,14 +10,23 @@ const {ObjectId} = require("mongodb");
 router.get("/get_post",  async (req, res) => {
 
     try {
-        const posts = await postModel.find({});
-        for(let i=0;i<posts.length;i++) {
-            const user = await userModel.getUserPublicData(ObjectId(posts[i].uid)) || {};
-            posts[i].first_name = user.first_name || "DELETED";
-            posts[i].last_name = user.last_name || "USER"
+        // const posts = await postModel.find({});
+        // for(let i=0;i<posts.length;i++) {
+        //     const user = await userModel.getUserPublicData(ObjectId(posts[i].uid)) || {};
+        //     posts[i].first_name = user.first_name || "DELETED";
+        //     posts[i].last_name = user.last_name || "USER"
+        // };
 
-        }
-
+        const posts = await postModel.aggregate([
+            { $lookup:
+                    {
+                        from: 'users',
+                        localField: 'uid',
+                        foreignField: '_id',
+                        as: 'user_data'
+                    }
+            }
+        ]).sort({createdAt : -1});
         res.status(200).send({posts:posts});
     }
     catch(error) {
@@ -26,16 +35,14 @@ router.get("/get_post",  async (req, res) => {
 });
 
 router.post('/create_post',auth,async (req,res)=>{
-
     const post = new postModel({
-        uid : req.session.uid,
+        uid : ObjectId(req.session.uid),
         body : req.body.post_body,
         subject : req.body.post_subject,
     });
     try {
         db_res = await post.save();
-        req.flash('msg', 'post created');
-        res.redirect('/');
+        res.status(201).send({msg:"ok"});
     }
     catch(error) {
         res.status(500).send(error);
