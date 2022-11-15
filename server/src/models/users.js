@@ -2,45 +2,56 @@ const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const validateEmail = function(email) {
-    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return re.test(email)
-};
+const config = {
+    password : { max : 30 , min : 8 , match : {regex : /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]*$/ , description : 'Should be combination of Number , Alphabit , Special Characters'}},
+    email : { match : {regex : /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ , description : 'Enter a valid Email Address'}},
+    first_name : { min : 3 , max : 30 , match : {regex : /^[a-zA-Z\-]+$/ , description : 'Name should contain only English Alphabits'}},
+    last_name  : { min:3 , max : 30 , match : {regex : /^[a-zA-Z\-]+$/ , description : 'Name should contain only English Alphabits'}},
+    username : { min:3 , max : 30 ,match : {regex : /^[A-Za-z][A-Za-z0-9_]*$/ , description : 'Username should start with Alphabits and Should not contain Special characters.'}},
+}
 
 const UserSchema = new mongoose.Schema({
     first_name: {
         type: String,
         required: true,
-        minLength: 3,
+        minLength: config.first_name.min,
+        maxLength: config.first_name.max,
+        match: [config.first_name.match.regex, config.first_name.match.description],
         trim:true,
     },
     last_name: {
         type: String,
         required: true,
-        minLength: 3,
+        minLength: config.last_name.min,
+        maxLength: config.last_name.max,
+        match: [config.last_name.match.regex, config.last_name.match.description],
         trim:true,
     },
     username: {
         type: String,
         required: true,
-        minLength: 3,
+        minLength: config.username.min,
+        maxLength: config.username.max,
+        match: [config.username.match.regex, config.username.match.description],
         unique: true,
         trim:true,
     },
     email: {
         type: String,
         required: true,
-        minLength: 3,
+        minLength: config.email.min,
+        maxLength: config.email.max,
         trim:true,
         unique: true,
         lowercase: true,
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
-        validate: [validateEmail,'Please fill a valid email address2']
+        match: [config.email.match.regex, config.email.match.description],
     },
     password: {
         type: String,
         required: true,
-        minLength:3,
+        minLength:config.password.min,
+        maxLength: config.password.max,
+        match: [config.password.match.regex, config.password.match.description],
         trim:true
     }
 },{

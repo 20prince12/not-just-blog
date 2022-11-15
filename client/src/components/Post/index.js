@@ -13,8 +13,7 @@ const Blog_post = (props) =>(
     <div className="post">
         <ul>
         {props.posts.map(post => (
-            <div>
-            <Posts key={post._id} post={post} /></div>
+            <Posts key={post._id} post={post} />
         ))}
         </ul>
     </div>
