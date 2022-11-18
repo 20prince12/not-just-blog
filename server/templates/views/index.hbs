@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Home</title>
+    <link rel="icon" href="img/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js"></script>
+</head>
+
+<body>
+{{>header}}
+<main>
+    {{#if msg}}
+        <p>{{msg}}</p>
+    {{/if}}
+{{#if session.loggedin}}
+    <h1>welcome {{session.username}}</h1>
+        <label> Subject : </label>
+        <input type="text" id="post_subject" required min="3"/>
+        <br>
+        <label> Body: </label>
+        <textarea type="text" id="post_body" required min="3" rows="4" cols="50"/>
+        </textarea>
+        <button id="submit_post">CREATE</button>
+    {{else}}
+        <h1>Login to create your own posts</h1>
+    {{/if}}
+    <hr>
+    <div class="posts_container">
+    </div>
+</main>
+{{>footer}}
+</body>
+</html>
