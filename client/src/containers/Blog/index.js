@@ -3,6 +3,7 @@ import Post from "../../components/Post";
 import Loader from '../../components/Loader'
 import Header from '../../components/Header'
 
+
 class Blog extends Component {
     state = {
         posts: [],
