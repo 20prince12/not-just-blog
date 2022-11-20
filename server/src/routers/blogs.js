@@ -10,12 +10,6 @@ const {ObjectId} = require("mongodb");
 router.get("/get_post",  async (req, res) => {
 
     try {
-        // const Blog = await postModel.find({});
-        // for(let i=0;i<Blog.length;i++) {
-        //     const user = await userModel.getUserPublicData(ObjectId(Blog[i].uid)) || {};
-        //     Blog[i].first_name = user.first_name || "DELETED";
-        //     Blog[i].last_name = user.last_name || "USER"
-        // };
         const subject = req.query.subject || "";
         const body = req.query.body || "";
 
@@ -44,6 +38,7 @@ router.get("/get_post",  async (req, res) => {
 });
 
 router.post('/create_post',auth,async (req,res)=>{
+
     const post = new postModel({
         uid : ObjectId(req.session.uid),
         body : req.body.post_body,

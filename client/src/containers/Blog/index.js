@@ -1,40 +1,29 @@
-import {Component} from "react";
+import {useState,useEffect } from "react";
 import Post from "../../components/Post";
 import Loader from '../../components/Loader'
-import Header from '../../components/Header'
 
 
-class Blog extends Component {
-    state = {
-        posts: [],
-        postSearch: '',
-        isFetching: false,
+const Blog = () => {
 
-    }
+    const [posts, setPosts] = useState([]);
+    const [search, setSearch] = useState('');
+    const [isFetching, setIsFetching] = useState(false);
 
-
-    componentDidMount() {
+    useEffect(() => {
         document.title = "posts"
-        this.setState(({isFetching: true}))
-        fetch(`http://localhost:5000/get_post`)
+        setIsFetching(true);
+        fetch(`http://localhost:5000/get_post?subject=${search}`)
             .then((response)=>response.json())
-            .then((data)=>this.setState( { posts : data.posts , isFetching: false}));
+            .then((data)=>{setPosts(data.posts); setIsFetching(false);});
+    },[search])
+
+    const onSearch =(event)=>{
+        setSearch(event.target.value);
     }
 
-    onSearch =(event)=>{
-        this.setState(({postSearch: event.target.value , isFetching: true}))
-        fetch(`http://localhost:5000/get_post?subject=${event.target.value}`)
-        .then((response)=>response.json())
-        .then((data)=>this.setState( { posts : data.posts , isFetching: false}));
-
-    }
-
-    render() {
-        const {posts, postSearch, isFetching} = this.state;
         return (
         <div>
-            <Header/>
-            Search : <input value={postSearch} type="text" onChange={this.onSearch} />
+            Search : <input type="text" onChange={onSearch} />
             {
                 !isFetching && posts.length===0
                 &&
@@ -44,11 +33,10 @@ class Blog extends Component {
                 isFetching && <Loader />
             }
             {
-                !isFetching && <Post posts={this.state.posts}/>
+                !isFetching && <Post posts={posts}/>
             }
         </div>
         )
-    }
 }
 
 export default Blog

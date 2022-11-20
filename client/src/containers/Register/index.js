@@ -2,13 +2,13 @@ import  { useState } from "react";
 import FormInput from '../../components/Form/FormInput'
 import FormButton from '../../components/Form/FormButton'
 import register_img_src from './register.svg';
-
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [msg, setMsg] = useState('');
-    const [status, setStatus] = useState('');
     const [isFetching, setIsFetching] = useState('');
     const [formData, setFormData] = useState({first_name:'',last_name:'',username:'',email:'',password:''})
+    const navigate = useNavigate();
 
     const updateInputData  = (childData) => {
         setFormData({...formData, [childData.name] : childData.value});
@@ -22,12 +22,11 @@ const Register = () => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(formData)
         }).then((response)=>{
-            setStatus(response.status);
-            return response.json();}
-        ).then((data)=>{
+            if(response.status===200) navigate('/');
+            return response.json();
+        }).then((data)=>{
             setMsg(data.msg);
-        })
-        .then(()=>(setIsFetching(false)))
+        }).then(()=>(setIsFetching(false)))
     }
         return(
             <div>
