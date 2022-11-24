@@ -7,7 +7,7 @@ const {ObjectId} = require("mongodb");
 
 
 
-router.get("/get_post",  async (req, res) => {
+router.get("/api/get_post",  async (req, res) => {
 
     try {
         const subject = req.query.subject || "";
@@ -37,7 +37,7 @@ router.get("/get_post",  async (req, res) => {
     }
 });
 
-router.post('/create_post',auth,async (req,res)=>{
+router.post('/api/create_post',auth,async (req,res)=>{
 
     const post = new postModel({
         uid : ObjectId(req.session.uid),

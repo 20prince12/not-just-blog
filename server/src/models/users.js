@@ -84,7 +84,7 @@ UserSchema.pre('updateOne' ,async function(next) {
 });
 
 UserSchema.methods.generateAuthToken = async function() {
-    const token = jwt.sign({_id: this._id.toString() } , 'secret');
+    const token = jwt.sign({_id: this._id.toString() } , process.env.SECRET_KEY || 'secret_key');
     return token;
 }
 

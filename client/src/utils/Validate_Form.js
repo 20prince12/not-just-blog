@@ -1,3 +1,5 @@
+import server from './server';
+
 const Validate_Form =  async (name , value ) =>{
     const errors = [];
     const config = {
@@ -11,7 +13,7 @@ const Validate_Form =  async (name , value ) =>{
     if(config[name].min > value.length) errors.push(`Length Should be more than ${config[name].min} Characters`);
     if(! config[name].match.regex.test(value)) errors.push(config[name].match.description);
     if(name==='email' || name==='username') {
-        await fetch(`http://localhost:5000/checkUserExists?${name}=${value}`)
+        await server.get(`/checkUserExists?${name}=${value}`)
             .then((res) => {
                 if (res.status === 200) errors.push(`${name} already taken.`);
             });

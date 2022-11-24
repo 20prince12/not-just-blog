@@ -4,7 +4,9 @@ const router = new express.Router();
 const auth = require('../middlewares/auth');
 const ObjectId = require('mongodb').ObjectId;
 
-router.post("/register",async (req,res)=>{
+router.post("/api/register",async (req,res)=>{
+    //const data =  JSON.parse(req.body);
+    console.log(req.body);
     const user = new userModel(req.body);
     try {
         db_res = await user.save();
@@ -16,7 +18,7 @@ router.post("/register",async (req,res)=>{
     }
 });
 
-router.get("/checkUserExists",async (req,res)=>{
+router.get("/api/checkUserExists",async (req,res)=>{
     try {
         db_res = await userModel.findOne(req.query)
         if(db_res) res.status(200).send();
@@ -27,13 +29,13 @@ router.get("/checkUserExists",async (req,res)=>{
     }
 });
 
-router.get("/register",(req,res)=>{
+router.get("/api/register",(req,res)=>{
     res.render('register');
 });
 
 
 
-router.post("/login",async (req,res)=>{
+router.post("/api/login",async (req,res)=>{
 
     const username = req.body.username;
     const password = req.body.password;
@@ -50,9 +52,7 @@ router.post("/login",async (req,res)=>{
         else
         {
             const token = await user.generateAuthToken();
-            req.session.loggedin = true;
-            req.session.uid = user._id.toString();
-            res.redirect('/');
+            res.status(200).send({authToken:token})
         }
     }
     catch(error)
@@ -61,17 +61,17 @@ router.post("/login",async (req,res)=>{
     }
 });
 
-router.get("/login",(req,res)=>{
+router.get("/api/login",(req,res)=>{
 
     res.render('login', {msg : req.flash('msg')});
 });
 
-router.get("/logout", auth,async (req,res)=>{
+router.get("/api/logout", auth,async (req,res)=>{
     await req.session.destroy();
     res.redirect('/');
 })
 
-router.get("/profile",auth, async (req,res)=>{
+router.get("/api/profile",auth, async (req,res)=>{
     try {
         db_res = await userModel.findOne({_id: ObjectId(req.session.uid)});
         res.render('profile', {session: req.session, user: db_res, msg: req.flash('msg')});
@@ -81,7 +81,7 @@ router.get("/profile",auth, async (req,res)=>{
     }
 });
 
-router.post("/profile",auth ,async (req,res)=>{
+router.post("/api/profile",auth ,async (req,res)=>{
     try {
         db_res =  await userModel.updateOne({_id: ObjectId(req.session.uid)}, req.body );
         req.flash('msg', 'Profile updated Successfully');

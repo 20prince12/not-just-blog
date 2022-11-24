@@ -4,7 +4,7 @@ const auth = require('../middlewares/auth');
 
 
 
-router.get("/messages",auth, (req,res)=>{
+router.get("/api/messages",auth, (req,res)=>{
 
     res.render('messages',{session: req.session});
 });

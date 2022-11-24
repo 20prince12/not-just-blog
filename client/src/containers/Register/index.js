@@ -3,6 +3,8 @@ import FormInput from '../../components/Form/FormInput'
 import FormButton from '../../components/Form/FormButton'
 import register_img_src from './register.svg';
 import { useNavigate } from 'react-router-dom';
+import server from '../../utils/server';
+
 
 const Register = () => {
     const [msg, setMsg] = useState('');
@@ -16,12 +18,8 @@ const Register = () => {
 
     const submit = () => {
         setIsFetching(true);
-        fetch(`http://localhost:5000/register`, {
-            method:'POST',
-            mode: 'cors',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(formData)
-        }).then((response)=>{
+        server.post(`/register`,  formData)
+        .then((response)=>{
             if(response.status===200) navigate('/');
             return response.json();
         }).then((data)=>{
