@@ -1,0 +1,21 @@
+{
+  "name": "not-just-blog",
+  "version": "1.0.0",
+  "description": "MERN Application",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd server && npm install  && cd ../client && npm install && npm run build",
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/20prince12/not-just-blog.git"
+  },
+  "author": "Prince Patel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/20prince12/not-just-blog/issues"
+  },
+  "homepage": "https://github.com/20prince12/not-just-blog#readme"
+}
