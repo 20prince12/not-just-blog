@@ -1,11 +1,15 @@
-const auth = (req , res , next) => {
+const User = require('../models/users');
+const jwt = require('jsonwebtoken');
 
-    if(req.session.loggedin) {
-        next();
-    }
-    else {
-        req.flash('msg', 'Please login to access this feature.');
-        res.redirect('/login');
+const auth = async (req , res , next) => {
+    const token = req.headers['x-access-token'];
+    try {
+        const decoded = jwt.verify(token, process.env.SECRET_KEY || 'secret_key')
+        const user =  await User.findOne({ _id: decoded._id })
+        if(user) next();
+        else     res.status(401).send({msg : 'Unauthorized'});
+    } catch (error) {
+        res.status(401).send({msg : 'Unauthorized'});
     }
 }
 

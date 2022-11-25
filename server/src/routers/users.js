@@ -20,12 +20,13 @@ router.post("/api/register",async (req,res)=>{
 
 router.get("/api/checkUserExists",async (req,res)=>{
     try {
-        db_res = await userModel.findOne(req.query)
+        db_res = await userModel.findOne(req.query);
+        console.log(db_res);
         if(db_res) res.status(200).send();
         else res.status(204).send();
     }
     catch(error){
-        res.status(501).send({'msg'  :'Internal Server Failure, Please Try to again later.'})
+        res.status(501).send({msg  :'Internal Server Failure, Please Try to again later.'})
     }
 });
 
@@ -45,10 +46,7 @@ router.post("/api/login",async (req,res)=>{
         const user = await userModel.findByCredentials(username , password);
 
 
-        if (!user) {
-            res.status(201);
-            res.render('login',{'msg' : 'Invalid Username/Password'})
-        }
+        if (!user) res.status(201).send({msg:'invalid UserName or Password'});
         else
         {
             const token = await user.generateAuthToken();

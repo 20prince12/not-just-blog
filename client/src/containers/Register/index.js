@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import {useEffect, useState} from "react";
 import FormInput from '../../components/Form/FormInput'
 import FormButton from '../../components/Form/FormButton'
 import register_img_src from './register.svg';
@@ -16,15 +16,19 @@ const Register = () => {
         setFormData({...formData, [childData.name] : childData.value});
     }
 
+    useEffect(() => {
+        document.title = "register"
+    },[]);
+
     const submit = () => {
         setIsFetching(true);
-        server.post(`/register`,  formData)
-        .then((response)=>{
-            if(response.status===200) navigate('/');
-            return response.json();
-        }).then((data)=>{
-            setMsg(data.msg);
-        }).then(()=>(setIsFetching(false)))
+        server.post(`/register`, formData)
+            .then((response) => {
+                console.log(response);
+                if (response.status === 200) navigate('/login');
+                else setMsg(response.data.msg);
+            });
+        setIsFetching(false);
     }
         return(
             <div>

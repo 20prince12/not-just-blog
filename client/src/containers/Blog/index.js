@@ -12,8 +12,10 @@ const Blog = () => {
     useEffect(() => {
         document.title = "posts"
         setIsFetching(true);
-        server.get(`/get_post?subject=${search}`).then((response)=>{setPosts(response.data.posts);
-        setIsFetching(false);});
+        server.get(`/get_post?subject=${search}`).then((response)=>{
+            setPosts(response.data.posts);
+            setIsFetching(false);
+        });
     },[search])
 
     const onSearch =(event)=>{

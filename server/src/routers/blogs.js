@@ -7,7 +7,7 @@ const {ObjectId} = require("mongodb");
 
 
 
-router.get("/api/get_post",  async (req, res) => {
+router.get("/api/get_post",auth,  async (req, res) => {
 
     try {
         const subject = req.query.subject || "";
