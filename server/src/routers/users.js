@@ -59,16 +59,6 @@ router.post("/api/login",async (req,res)=>{
     }
 });
 
-router.get("/api/login",(req,res)=>{
-
-    res.render('login', {msg : req.flash('msg')});
-});
-
-router.get("/api/logout", auth,async (req,res)=>{
-    await req.session.destroy();
-    res.redirect('/');
-})
-
 router.get("/api/profile",auth, async (req,res)=>{
     try {
         db_res = await userModel.findOne({_id: ObjectId(req.session.uid)});

@@ -1,7 +1,7 @@
 import {useState,useEffect } from "react";
 import Post from "../../components/Post";
 import Loader from '../../components/Loader';
-import server from '../../utils/server';
+import api from '../../utils/api';
 
 const Blog = () => {
 
@@ -12,7 +12,7 @@ const Blog = () => {
     useEffect(() => {
         document.title = "posts"
         setIsFetching(true);
-        server.get(`/get_post?subject=${search}`).then((response)=>{
+        api.get(`/get_post?subject=${search}`).then((response)=>{
             setPosts(response.data.posts);
             setIsFetching(false);
         });
