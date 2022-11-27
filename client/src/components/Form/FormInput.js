@@ -28,7 +28,7 @@ const FormInput = (props) => {
             <div className="relative z-0 mb-6 w-full group">
                 <input onChange={changeInput}  type={props.type} required name="floating_email" id="floating_email" name={props.name}
                        className={`${errorClass[InputColor]} border-gray-300 block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0  peer`}
-                       placeholder=" " required/>
+                       placeholder=" "/>
                 <label htmlFor="floating_email"
                        className="font-semibold peer-focus:font-medium absolute text-sm text-gray-800 dark:text-gray-200 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] left-0 peer-focus:left-0 dark:peer-focus:text-cyan-200  peer-focus:text-cyan-600 peer-focus:dark:text-cyan-200 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     {props.label}</label>
