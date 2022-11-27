@@ -8,12 +8,9 @@ const {ObjectId} = require("mongodb");
 
 
 router.get("/api/get_post",auth,  async (req, res) => {
-
     try {
         const subject = req.query.subject || "";
         const body = req.query.body || "";
-
-        console.log(req.query.subject);
         const posts = await postModel.aggregate([
             {$match : {
                       subject: {$regex: `.*${subject}.*`}
@@ -40,7 +37,7 @@ router.get("/api/get_post",auth,  async (req, res) => {
 router.post('/api/create_post',auth,async (req,res)=>{
 
     const post = new postModel({
-        uid : ObjectId(req.session.uid),
+        uid : ObjectId(req.body.uid),
         body : req.body.post_body,
         subject : req.body.post_subject,
     });

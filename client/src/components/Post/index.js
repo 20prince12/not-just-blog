@@ -38,9 +38,9 @@ const Blog_post = (props) => {
                 <p className="paragraph-normal text-gray-600  text-gray-900 dark:text-gray-200 ">
                     {post.body}
                 </p>
-                <div className="flow-root">
-                    <div  className="float-left cursor-pointer flex text-xs hover:text-cyan-700 dark:hover:text-cyan-200 dark:text-white">{post.user_data[0].first_name} {post.user_data[0].last_name} {svg[`user_${theme}`]}  </div>
-                    <div  className="float-right cursor-pointer text-xs hover:text-cyan-700 dark:hover:text-cyan-200 dark:text-white"> {svg[`eye_${theme}`]} </div>
+                <div className=" flow-root">
+                    <div  className="float-left    cursor-pointer flex text-xs hover:text-cyan-700 dark:hover:text-cyan-200 dark:text-white">{post.user_data[0].first_name} {post.user_data[0].last_name} {svg[`user_${theme}`]}  </div>
+                    <div  className="float-right    cursor-pointer text-xs hover:text-cyan-700 dark:hover:text-cyan-200 dark:text-white"> {svg[`eye_${theme}`]} </div>
                 </div>
             </div>
         </div>
