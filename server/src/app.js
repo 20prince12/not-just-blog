@@ -2,6 +2,9 @@
 const express = require('express');
 const app = express();
 
+//Connect db
+require('./utils/dbconnection');
+
 // Form Data
 app.use(express.urlencoded({ extended: true }));
 
@@ -35,6 +38,8 @@ const messageRouter = require('./routers/messages');
 app.use(userRouter);
 app.use(blogRouter);
 app.use(messageRouter);
+
+
 
 app.get("/",  async (req, res) => {
         res.status(200).send({msg:'Server up and running'});
