@@ -3,12 +3,15 @@ import FormInput from '../../components/Form/FormInput'
 import FormButton from '../../components/Form/FormButton'
 import { useNavigate } from 'react-router-dom';
 import api from '../../utils/api';
+import {UserContext} from "../../context/UserContext";
+import {useContext} from "react";
 
 
 const Register = () => {
     const [msg, setMsg] = useState('');
-    const [isFetching, setIsFetching] = useState('');
+    const [IsFetching, setIsFetching] = useState(false);
     const [formData, setFormData] = useState({first_name:'',last_name:'',username:'',email:'',password:''})
+    const {setCustomMsg} = useContext(UserContext);
     const navigate = useNavigate();
 
     const updateInputData  = (childData) => {
@@ -16,29 +19,31 @@ const Register = () => {
     }
 
     useEffect(() => {
-        document.title = "register"
+        document.title = "register";
     },[]);
 
     const submit = () => {
         setIsFetching(true);
         api.post(`/register`, formData)
             .then((response) => {
-                console.log(response);
                 if (response.status === 200) navigate('/login');
                 else setMsg(response.data.msg);
-            });
-        setIsFetching(false);
+            }).then(()=>{
+                setIsFetching(false);
+                setCustomMsg({value:'Successfully Registered, Please login',type:'success'});
+        })
+            .catch(()=>setIsFetching(false));
     }
         return(
             <div>
                 { msg }
-                <div  className="p-6 max-w-sm mx-auto bg-zinc-200 rounded-xl shadow-xl">
+                <div className="my-20 p-8 max-w-sm mx-auto bg-gray-200 dark:bg-gray-600 rounded-md shadow-xl">
                     <FormInput validate='true' parentCallBack={updateInputData} type="email" label="Email" name="email"/>
-                    <FormInput parentCallBack={updateInputData} type="text" label="First Name" name="first_name" />
-                    <FormInput parentCallBack={updateInputData} type="text" label="Last Name" name="last_name" />
-                    <FormInput parentCallBack={updateInputData} type="text" label="Username" name="username"/>
-                    <FormInput parentCallBack={updateInputData} type="password" label="Password" name="password" />
-                    <FormButton parentCallBack={submit} value="Register" isFetching={isFetching} />
+                    <FormInput validate='true' parentCallBack={updateInputData} type="text" label="First Name" name="first_name" />
+                    <FormInput validate='true' parentCallBack={updateInputData} type="text" label="Last Name" name="last_name" />
+                    <FormInput validate='true' parentCallBack={updateInputData} type="text" label="Username" name="username"/>
+                    <FormInput validate='true' parentCallBack={updateInputData} type="password" label="Password" name="password" />
+                    <FormButton validate='true' parentCallBack={submit} value="Register" isFetching={IsFetching} />
                 </div>
             </div>
         )

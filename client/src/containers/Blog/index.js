@@ -2,6 +2,7 @@ import {useState,useEffect } from "react";
 import Post from "../../components/Post";
 import Loader from '../../components/Loader';
 import api from '../../utils/api';
+import SearchBox from "../../components/SearchBox";
 
 const Blog = () => {
 
@@ -18,17 +19,17 @@ const Blog = () => {
         });
     },[search])
 
-    const onSearch =(event)=>{
-        setSearch(event.target.value);
+    const onSearch =(value)=>{
+        setSearch(value);
     }
 
         return (
         <div>
-            Search : <input type="text" onChange={onSearch} />
+            <SearchBox onSearch = {onSearch} />
             {
                 !isFetching && posts.length===0
                 &&
-                <p>No posts have been found with this title</p>
+                <p className="dark:text-white text-gray-800">No posts have been found with this title</p>
             }
             {
                 isFetching && <Loader />

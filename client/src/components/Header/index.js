@@ -30,7 +30,7 @@ const Header = props => {
 
     return (
 
-        <div onClick={themeSwitch} className="dark:bg-gray-100 dark:text-gray-800 dark:text-black fixed right-5  bottom-5  bg-gray-800 text-white drop-shadow-xl rounded-3xl  h-10 w-10 flex items-center justify-center cursor-pointer hover:text-gray-800 hover:bg-gray-400 dark:hover:text-gray-800 hover:duration-300 dark:hover:bg-gray-400 hover:ease-linear dark:focus:bg-gray-800 focus:bg-white">
+        <div onClick={themeSwitch} className="z-10 hover:dark:text-white dark:bg-gray-100 dark:text-gray-800 dark:text-black fixed right-5  bottom-5  bg-gray-800 text-white drop-shadow-xl rounded-3xl  h-10 w-10 flex items-center justify-center cursor-pointer hover:text-gray-800 hover:bg-gray-300 hover:duration-300 dark:hover:bg-gray-700 hover:ease-linear dark:focus:bg-gray-800 focus:bg-white">
             {svg[theme]}
         </div>
     )
