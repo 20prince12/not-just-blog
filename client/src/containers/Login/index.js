@@ -14,6 +14,7 @@ const Login = () => {
     const [msg, setMsg] = useState(CustomMsg);
 
     useEffect(()=>{
+        document.title = "login";
         setCustomMsg({});
     },[])
 
