@@ -20,7 +20,7 @@ const Blog_post = (props) => {
     }
 
     const Posts = ({post})=>(
-            <div className="p-2 flex-col hover:border-cyan-600 dark:hover:border-cyan-200  w-full my-1 py-1 border-0 rounded-md shadow-sm text-black bg-white dark:bg-gray-900 border border border-gray-200 dark:border-gray-600 dark:text-white">
+            <div className="p-2 flex-col hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-cyan-600 dark:hover:border-cyan-200  w-full my-0.5 py-1 border-0  shadow-sm text-black bg-white dark:bg-gray-900 border border border-gray-200 dark:border-gray-600 dark:text-white">
                 <div className="pb-1 flex justify-start mt-1 hover:contrast-150 justify-start hover:cursor-pointer dark:hover:text-cyan-200  hover:text-cyan-600">
                     <img className="contrast-100  border dark:border-gray-200 border-gray-700 w-8 h-8 rounded-3xl" src="https://www.kindpng.com/picc/b/155-1551570_yasuo-png.png" />
                     <h1 className="ml-2 self-center font-mono text-sm w-full">{post.user_data[0].first_name}</h1>
@@ -35,7 +35,7 @@ const Blog_post = (props) => {
     )
 
     return (
-            <div className="flex-col m-2">
+            <div>
                 {props.posts.map(post => (
 
                     <Posts key={post._id} post={post}/>

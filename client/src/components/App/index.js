@@ -7,10 +7,12 @@ import { UserContextWrapper } from "../../context/UserContext";
 const App = () => {
     return (
         <UserContextWrapper>
-        <div className="App">
+        <div className="App flex-row">
             <Header />
-            <Main />
+            <div className="App flex">
             <Navbar />
+            <Main />
+            </div>
         </div>
         </UserContextWrapper>
     );

@@ -9,6 +9,7 @@ import PageNotFound from '../PageNotFound/index';
 const Main = props => (
     <Routes>
         <Route exact path="/" element={<Blog />} />
+        <Route exact path="/Home" element={<Blog />} />
         <Route exact path="/Register" element={<Register />} />
         <Route exact path="/Login" element={<Login />} />
         <Route exact path="/Logout" element={<Logout />} />

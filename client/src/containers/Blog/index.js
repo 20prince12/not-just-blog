@@ -1,31 +1,29 @@
-import {useState,useEffect } from "react";
+import {useState, useEffect, useContext} from "react";
 import Post from "../../components/Post";
 import Loader from '../../components/Loader';
 import api from '../../utils/api';
-import SearchBox from "../../components/SearchBox";
+import {UserContext} from "../../context/UserContext";
+import Header from "../../components/Header";
+import Navbar from "../../components/Navbar";
 
 const Blog = () => {
 
     const [posts, setPosts] = useState([]);
-    const [search, setSearch] = useState('');
+    const {Search} = useContext(UserContext);
     const [isFetching, setIsFetching] = useState(false);
 
     useEffect(() => {
         document.title = "posts"
         setIsFetching(true);
-        api.get(`/get_post?subject=${search}`).then((response)=>{
+        api.get(`/get_post?subject=${Search}`).then((response)=>{
             setPosts(response.data.posts);
             setIsFetching(false);
         });
-    },[search])
+    },[Search])
 
-    const onSearch =(value)=>{
-        setSearch(value);
-    }
 
         return (
-        <div>
-            <SearchBox onSearch = {onSearch} />
+        <div className="flex-auto ml-52 flex-col m-2">
             {
                 !isFetching && posts.length===0
                 &&

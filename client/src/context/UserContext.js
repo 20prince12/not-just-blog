@@ -6,6 +6,7 @@ export const UserContextWrapper  = (props) =>{
     const [theme, setTheme] = useState(localStorage.getItem('theme') ||  window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light' );
     const [IsLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('authToken') || false);
     const [CustomMsg, setCustomMsg] = useState({});
+    const [Search, setSearch] = useState('');
 
     const state = {
          theme
@@ -14,6 +15,8 @@ export const UserContextWrapper  = (props) =>{
         ,setIsLoggedIn
         ,CustomMsg
         ,setCustomMsg
+        ,Search
+        ,setSearch
     }
 
     return (

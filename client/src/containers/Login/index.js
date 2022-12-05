@@ -55,7 +55,7 @@ const Login = () => {
             if (response.status === 200) {
                 localStorage.setItem('authToken', response.data.authToken);
                 setIsLoggedIn(true);
-                navigate('/');
+                navigate('/Home');
             } else setMsg({value:response.data.msg, type:'fail'});
         }).then(()=>setIsFetching(false))
         .catch(()=>setIsFetching(false));
@@ -63,7 +63,7 @@ const Login = () => {
     }
     return(
         <div>
-            <div  className="my-20 p-8 max-w-sm mx-auto bg-gray-200 dark:bg-gray-600 rounded-md shadow-xl">
+            <div  className=" ml-52 flex-col m-2 my-10 p-8 w-full bg-gray-100 dark:bg-gray-600 rounded-md shadow-xl">
                 {msg.value && displayMsg[msg.type]}
                 <FormInput parentCallBack={updateInputData} type="text" label="Username" name="username" placeholder="enter Username..." />
                 <FormInput parentCallBack={updateInputData} type="password" label="Password" name="password" placeholder="enter Password..." />
