@@ -7,9 +7,9 @@ import { UserContextWrapper } from "../../context/UserContext";
 const App = () => {
     return (
         <UserContextWrapper>
-        <div className="App flex-row">
+        <div className="App bg-gray-200 dark:bg-gray-800 flex-row">
             <Header />
-            <div className="App flex">
+            <div className="flex">
             <Navbar />
             <Main />
             </div>
