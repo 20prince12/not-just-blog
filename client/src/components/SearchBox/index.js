@@ -34,14 +34,12 @@ const SearchBox = (props) => {
                                 <input onChange={onSearch} type="text"
                                        className="cursor-text  text-lg	focus:border-2 border-cyan-600 dark:border-cyan-300 bg-white/50 dark:bg-gray-600/50 h-10 w-full pl-3 pr-20 rounded-lg focus:outline-none"
                                         />
+                                <span className="border-l border-gray-300 dark:border-gray-600 pl-2 absolute right-10 self-center ml-4 dark:hover:text-cyan-300 hover:text-cyan-700 hover:cursor-pointer">
+                                {svg.search}
+                                    </span>
                                     <span className="absolute right-2 self-center ml-4 dark:hover:text-cyan-300 hover:text-cyan-700 hover:cursor-pointer">
                                     {svg[`microphone_${theme}`]}
                                     </span>
-                                <span className="absolute right-10 self-center ml-4 dark:hover:text-cyan-300 hover:text-cyan-700 hover:cursor-pointer">
-                                {svg.search}
-                                    </span>
-
-
                             </div>
                         </div>
                     </div>

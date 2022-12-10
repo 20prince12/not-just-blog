@@ -3,8 +3,6 @@ import Post from "../../components/Post";
 import Loader from '../../components/Loader';
 import api from '../../utils/api';
 import {UserContext} from "../../context/UserContext";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
 
 const Blog = () => {
 
@@ -23,11 +21,11 @@ const Blog = () => {
 
 
         return (
-        <div className="flex-auto ml-52 flex-col m-2">
+        <div className="flex-auto lg:ml-40 ml-20 flex-col m-2">
             {
                 !isFetching && posts.length===0
                 &&
-                <p className="dark:text-white text-gray-800">No posts have been found with this title</p>
+          <p className="dark:text-white text-gray-800">No posts have been found with this title</p>
             }
             {
                 isFetching && <Loader />

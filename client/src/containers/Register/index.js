@@ -37,7 +37,7 @@ const Register = () => {
         return(
             <div>
                 { msg }
-                <div className=" ml-52 flex-col m-2 my-10 p-8 w-full bg-gray-100 dark:bg-gray-600 rounded-md shadow-xl">
+                <div className=" justify-self-center ml-52 flex-col m-2 my-10 p-8  bg-gray-100 dark:bg-gray-600 rounded-md shadow-xl">
                     <FormInput validate='true' parentCallBack={updateInputData} type="email" label="Email" name="email"/>
                     <FormInput validate='true' parentCallBack={updateInputData} type="text" label="First Name" name="first_name" />
                     <FormInput validate='true' parentCallBack={updateInputData} type="text" label="Last Name" name="last_name" />

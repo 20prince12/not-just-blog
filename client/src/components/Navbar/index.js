@@ -17,7 +17,7 @@ const Navbar = props => {
         :[{svg : 'register' , route : '/Register' },{svg : 'login' , route : '/Login' }];
 
     return (
-            <nav className="w-44 fixed left-0 h-screen p-6">
+            <nav className="fixed left-0 h-screen py-3 px-5">
                 {navItems.map((item)=><NavItem svg={item.svg} route={item.route} key={item.svg}/>) }
             </nav>
     )

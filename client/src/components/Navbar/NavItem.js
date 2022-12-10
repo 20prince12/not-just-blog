@@ -55,15 +55,15 @@ const NavItem = props =>{
 
     const location = useLocation()
     console.log(props);
-    const isActive = props.route == location.pathname? true : false;
+    const isActive = props.route === location.pathname? true : false;
     console.log(isActive);
     return (
-        <div onClick={goToURL}>
+        <div  onClick={goToURL}>
             <div className="px-3 py-3 text-gray-800 dark:text-white drop-shadow-xl rounded-2xl inline-flex space-x-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-900  hover:duration-300 hover:ease-linear focus:bg-white">
             <div>
                 {isActive?svg[props.svg+"_active"]:svg[props.svg+"_inactive"]}
             </div>
-            <h1 className={isActive?"font-bold":""}>{props.svg}</h1>
+            <h1 className={isActive?"font-bold lg:block hidden":"lg:block hidden"}>{props.svg}</h1>
             </div>
         </div>
 )}
