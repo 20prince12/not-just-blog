@@ -1,5 +1,3 @@
-import loaderSrc from '../../assets/loader.gif';
-
 const Loader = props =>(
     <div>
         <svg  aria-hidden="true" role="status"

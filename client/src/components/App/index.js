@@ -9,9 +9,9 @@ const App = () => {
         <UserContextWrapper>
         <div className="App bg-gray-200 dark:bg-gray-800 flex-row">
             <Header />
-            <div className="flex content-center">
+            <div className="flex">
             <Navbar />
-            <Main />
+            <div className='flex-1'><Main /></div>
             </div>
         </div>
         </UserContextWrapper>
